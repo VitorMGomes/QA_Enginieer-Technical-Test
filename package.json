@@ -1,0 +1,28 @@
+{
+  "name": "qa_enginieer-technical-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "engines": {
+    "node": "v18.19.1"
+  },
+  "scripts": {
+    "cypress:web": "npx cypress open",
+    "cypress:headless": "npx cypress run --browser electron"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VitorMGomes/QA_Enginieer-Technical-Test.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VitorMGomes/QA_Enginieer-Technical-Test/issues"
+  },
+  "homepage": "https://github.com/VitorMGomes/QA_Enginieer-Technical-Test#readme",
+  "devDependencies": {
+    "cypress": "^13.15.2"
+  }
+}
