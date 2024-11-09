@@ -1,0 +1,46 @@
+NTL -- Facilita a execao dos scripts
+
+
+
+
+
+Scrpit:
+
+Scenario: Adicionar produto ao carrinho
+    Given estou na página de um produto com estoque disponível
+    When adiciono N unidades do produto ao carrinho
+    Then verifico que o carrinho contém N unidades do produto
+
+Scenario: Adicionar mais itens ao carrinho do que o estoque disponível
+    Given já tenho itens adicionados ao carrinho
+    When tento adicionar uma quantidade superior ao estoque disponível (estoque + 1)
+    Then recebo uma mensagem informando que a loja não possui essa quantidade em estoque
+    And a quantidade no carrinho permanece inalterada
+
+Scenario: Remover todos os produtos do carrinho e verificar se ele está vazio
+    Given já tenho itens adicionados ao carrinho
+    When clico no botão de remover todos os produtos
+    Then vejo a mensagem de que o carrinho está vazio
+	
+-------------------------------------------------------------------------------------------------------------------------------
+
+Feature: Checking Cart
+
+
+Scenario: Add product to cart
+    Given I am on a product page with available stock
+    When I add N units of the product to the cart
+    Then I verify that the cart contains N units of the product
+
+Scenario: Add more items to the cart than available in stock
+    Given I already have items added to the cart
+    When I try to add a quantity exceeding the available stock (stock + 1)
+    Then I receive a message informing that the store does not have enough stock
+    And the quantity in the cart remains unchanged
+    
+Scenario: Remove all products from the cart and verify it is empty
+    Given I already have items added to the cart
+    When I click the button to remove all products
+    Then I see a message indicating that the cart is empty
+
+    //posso mudar esse ultimo para o carrinho estar unchanged mesmo depois de eu recarregar a pagina (fica mais a tempo de fazer)
