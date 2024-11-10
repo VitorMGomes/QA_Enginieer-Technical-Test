@@ -32,14 +32,21 @@ Scenario: Add product to cart
     When I add N units of the product to the cart
     Then I verify that the cart contains N units of the product
 
-Scenario: Add more items to the cart than available in stock
+Scenario: Reload the page and check if everything is still there
+    Given Im in the cart page and have items added to the cart
+    When I reload the page
+    Then I should see the same itens in the cart
+    
+
+
+
     Given I already have items added to the cart
     When I try to add a quantity exceeding the available stock (stock + 1)
     Then I receive a message informing that the store does not have enough stock
     And the quantity in the cart remains unchanged
     
-Scenario: Remove all products from the cart and verify it is empty
-    Given I already have items added to the cart
+Scenario: Remove products added from the cart and verify it is empty
+    Given I am in the page with the itens added on the cart
     When I click the button to remove all products
     Then I see a message indicating that the cart is empty
 

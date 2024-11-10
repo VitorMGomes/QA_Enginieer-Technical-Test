@@ -1,5 +1,6 @@
 describe('Cart Checking', () => {
 
+  // Test to add a product to the cart
   describe('Add product to cart', () => {
 
     let maxStock;
@@ -9,7 +10,7 @@ describe('Cart Checking', () => {
     it('Given I am on a product page with available stock', () => {
       cy.visit('http://www.automationpractice.pl/index.php?id_product=7&controller=product#/16-color-yellow/2-size-m');
 
-      // Verifica se o produto está disponível em estoque
+      // Verify if the product is available in stock
       cy.get('#availability_value').should('have.text', 'In stock');
     });
 
@@ -17,69 +18,88 @@ describe('Cart Checking', () => {
       cy.get('#quantityAvailable').invoke('text').then((text) => {
         const availableStock = parseInt(text.trim(), 10);
 
-        // Gera um valor aleatório para N entre 1 e o valor máximo de estoque disponível
+        // Create a random value between available stock and 1
         N = Math.floor(Math.random() * availableStock) + 1;
         maxStock = availableStock;
 
-        // Adiciona N unidades ao carrinho
+        // Add N units to the cart
         cy.get('#quantity_wanted').clear().type(N);
         cy.get('#add_to_cart button').click();
       });
     });
 
     it('Then I should see the option to go to cart page', () => {
-      // Verifica se as opções de continuar comprando ou ir para o carrinho aparecem
+      // Verify if the options to continue shopping or go to cart are visible
       cy.get('.layer_cart_cart').should('be.visible');
       
-      // Verifica se a opção "Proceed to Checkout" está visível
+      // Check if "Proceed to Checkout" button is visible
       cy.get('.button-container a[title="Proceed to checkout"]').should('be.visible');
     });
 
     it('Then I go to the cart page', () => {
-      // Clica no botão "Proceed to Checkout"
+      // Click on the "Proceed to Checkout" button
       cy.get('.button-container a[title="Proceed to checkout"]').click();
     });
 
     it('And I verify that the cart contains N units of the product', () => {
-      // Check if cart quantity is correct
+      // Check if the cart quantity is correct
       cy.get('.cart_quantity_input').should('have.value', N.toString());
     });
   });
 
+  // Test to reload the cart page and verify product consistency
   describe('Reload the page and check if everything is still there', () => {
 
-    let priceBefore; //save to compare the prices before
-    let priceAfter; // and after reloading the page
+    let priceBefore; // Save total price before reload for comparison
+    let priceAfter; // Save total price after reload for comparison
 
-    it('Given Im in the cart page and have items added to the cart', () => {
-      
-      cy.get('#total_price').invoke('text').then((text) => { //get the total price
-        const priceText = text.replace(/[^\d]/g, ''); //Remove every character except from numbers
+    it('Given I am on the cart page and have items added to the cart', () => {
+
+      cy.visit('http://www.automationpractice.pl/index.php?controller=order');
+
+      cy.get('#total_price').invoke('text').then((text) => { // Get the total price
+        const priceText = text.replace(/[^\d]/g, ''); // Remove all characters except numbers
         priceBefore = parseInt(priceText, 10);
       });
-      
       
     });
 
     it('When I reload the page', () => {
-      cy.reload(); //reload the page
+      cy.reload(); // Reload the page
     });
 
     it('Then I should see if there is no product missing', () => {
-      cy.get('#total_price').invoke('text').then((text) => { //get the total price
-        const priceText = text.replace(/[^\d]/g, ''); //Remove every character except from numbers
+      cy.get('#total_price').invoke('text').then((text) => { // Get the total price after reload
+        const priceText = text.replace(/[^\d]/g, ''); // Remove all characters except numbers
         priceAfter = parseInt(priceText, 10);
-
-        
       });
 
+      // Compare prices before and after reload; if any product or quantity is missing or extra, the prices will change
       expect(priceAfter === priceBefore);
 
     });
-    
 
   });
 
+  // Test to remove all products from the cart
+  describe('Remove all products from the cart', () => {
   
+    it('Given I am on the cart page with items added', () => {
+      cy.visit('http://www.automationpractice.pl/index.php?controller=order'); // Cart URL
+    });
   
+    it('When I click the button to remove all products', () => {
+      // While the cart is not empty, click on delete buttons
+      cy.get('.cart_quantity_delete').each(($el) => {
+        cy.wrap($el).click();
+      });
+    });
+  
+    it('Then I should see a message indicating that the cart is empty', () => {
+      // Check if the message "Your shopping cart is empty" is visible
+      cy.contains('Your shopping cart is empty').should('be.visible');
+    });
+  
+  });
+
 });
