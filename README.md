@@ -5,7 +5,7 @@
 
 **Language:** JavaScript
 
-**Code Path:** 
+**Code Path:** cypress/e2e/app.cy.js
 
 # Login System
 
