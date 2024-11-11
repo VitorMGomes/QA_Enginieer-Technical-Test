@@ -1,7 +1,7 @@
 describe('Cart Checking', () => {
 
   // Test to add a product to the cart
-  describe('Add product to cart', () => {
+  describe('Add Product to Cart', () => {
 
     let maxStock;
     const excessQuantity = 1;
@@ -36,24 +36,24 @@ describe('Cart Checking', () => {
       cy.get('.button-container a[title="Proceed to checkout"]').should('be.visible');
     });
 
-    it('Then I go to the cart page', () => {
+    it('And upon going to the cart page', () => {
       // Click on the "Proceed to Checkout" button
       cy.get('.button-container a[title="Proceed to checkout"]').click();
     });
 
-    it('And I verify that the cart contains N units of the product', () => {
+    it('Then the cart should contain N units of the product  ', () => {
       // Check if the cart quantity is correct
       cy.get('.cart_quantity_input').should('have.value', N.toString());
     });
   });
 
   // Test to reload the cart page and verify product consistency
-  describe('Reload the page and check if everything is still there', () => {
+  describe('Reload the Page and Check Persistence of Items', () => {
 
     let priceBefore; // Save total price before reload for comparison
     let priceAfter; // Save total price after reload for comparison
 
-    it('Given I am on the cart page and have items added to the cart', () => {
+    it('Given I am on the cart page with items already added', () => {
 
       cy.visit('http://www.automationpractice.pl/index.php?controller=order');
 
