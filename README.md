@@ -1,13 +1,12 @@
-<<<<<<< HEAD
+
 # Automation Practice
-=======
+
 **Framework:** Cypress
 
 **Language:** JavaScript
 
 
-# Cart Checking
->>>>>>> origin/main
+# Login System
 
 ### Signing-in with an Empty Email
 
