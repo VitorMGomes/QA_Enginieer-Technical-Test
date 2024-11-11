@@ -1,3 +1,7 @@
+**Framework:** Cypress
+**Language:** JavaScript
+
+
 # Cart Checking
 
 This document describes test scenarios to verify the functionality of the shopping cart in an e-commerce setting.
